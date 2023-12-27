@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .cont{
+            width: 780px; height: 100px;
+            border: 1px solid #DDDEE3; border-radius: 24px;
+            background-color: white; box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.08);
+
+            /* position: absolute; top:88%; left: 50%; margin-left: -400px; */
+            overflow: hidden; 
+            display: flex; align-items: flex-start;
+            padding: 0 22px;
+        }
+
+        .Post{
+            margin: 14px 18px 0px 18px; 
+            display: inline-block;
+        }
+        .Post:hover{
+            transform: translateY(-10px); transition: all 0.4s ;
+        }
+
+        .logo{
+            width: 153px; height: 56px; margin: 22px 18px 0px 0px;
+        }
+
+        .palette{
+            width: fit-content; height: fit-content;
+            display: inline-block;
+            margin: 12px 0px 0px 10px;
+        }
+        .palette > *{
+            width: 32px; height: 32px;
+            border-radius: 100%;
+            display: inline-block; margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <img class="logo" src="./img/logo.svg" alt="logo">
+        <img class="Post" src="./img/txtPost.svg" alt="txtPost">
+        <img class="Post" src="./img/filePost.svg" alt="filePost">
+        <div class="palette">
+            <div style="background-color: #FF5B73;"></div>
+            <div style="background-color: #FF9F46;"></div>
+            <div style="background-color: #FFDB5B;"></div>
+            <div style="background-color: #51D977;"></div>
+            <br>
+            <div style="background-color: #5B9DFF;"></div>
+            <div style="background-color: #FF9FF0;"></div>
+            <div style="background-color: #B57CFF;"></div>
+            <div style="background-color: #D9D9D9;"></div>
+        </div>
+    </div>
+    
+</body>
+</html>
