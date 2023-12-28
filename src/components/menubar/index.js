@@ -36,17 +36,11 @@ const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex, mapRef }) => {
             <Attachment
               colorCode={color}
               name={"김준경"}
-              isEdit={true}
-              postType={"text"}
+              isEditing={true}
+              postType={"TEXT"}
               setClickState={setClickRef}
-              defaultX={
-                parentRef.current.offsetWidth / 2 -
-                parentRef.current.offsetWidth / 4
-              }
-              defaultY={
-                parentRef.current.offsetHeight / 2 -
-                parentRef.current.offsetHeight / 4
-              }
+              defaultX={300}
+              defaultY={300}
               setZIndex={setZIndex}
               zIndex={ZIndex}
             />,
@@ -66,16 +60,11 @@ const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex, mapRef }) => {
             <Attachment
               colorCode={color}
               name={"김준경"}
-              isEdit={true}
-              postType={"file"}
+              isEditing={true}
+              postType={"FILE"}
               setClickState={setClickRef}
-              defaultX={
-                mapRef.current.offsetWidth / 2 - mapRef.current.offsetWidth / 4
-              }
-              defaultY={
-                mapRef.current.offsetHeight / 2 -
-                mapRef.current.offsetHeight / 4
-              }
+              defaultX={300}
+              defaultY={300}
               setZIndex={setZIndex}
             />,
           ]);

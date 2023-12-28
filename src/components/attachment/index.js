@@ -12,7 +12,7 @@ const Attachment = ({
   time,
   zIndex,
   setZIndex,
-  isEdit,
+  isEditing,
   postType,
   defaultX,
   defaultY,
@@ -23,6 +23,7 @@ const Attachment = ({
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [text, setText] = useState("");
   const [file, setfile] = useState(null);
+  const [isEdit, setIsEdit] = useState(isEditing);
 
   const { saveAttachmentMutate } = useSaveAttachmentMutation({
     content: text,
@@ -94,7 +95,7 @@ const Attachment = ({
       }}
     >
       {isEdit ? (
-        postType === "text" ? (
+        postType === "TEXT" ? (
           <textarea
             value={text}
             onFocus={() => {
@@ -132,21 +133,20 @@ const Attachment = ({
             <div className="font-normal w-full overflow-hidden whitespace-nowrap text-ellipsis">
               {file.substring(file.lastIndexOf("\\") + 1)}
             </div>
-            <div className="w-full flex justify-between text-[12px] text-[#202020] opacity-[0.4]">
-              <div className="font-normal">1.2MB</div>
-            </div>
+            <div className="w-full flex justify-between text-[12px] text-[#202020] opacity-[0.4]"></div>
           </div>
         )
-      ) : postType === "text" ? (
-        <div className="font-normal w-full break-words p-2">{contents}</div>
+      ) : postType === "TEXT" ? (
+        <div className="font-normal w-full break-words p-2">{text}</div>
       ) : (
         <div
           className="w-[228px] h-[71px] flex flex-col justify-between p-2 box-border relative m-2"
           style={{ backgroundColor: color[colorCode] }}
         >
-          <div className="font-normal">이것은 파일명입니다.png</div>
+          <div className="font-normal">
+            {file.substring(file.lastIndexOf("\\") + 1)}
+          </div>
           <div className="w-full flex justify-between text-[12px] text-[#202020] opacity-[0.4]">
-            <div className="font-normal">1.2MB</div>
             <div className="font-normal">클릭하여 다운로드</div>
           </div>
         </div>
@@ -162,7 +162,7 @@ const Attachment = ({
             style={{ backgroundColor: color[colorCode] }}
             onClick={() => {
               saveAttachmentMutate();
-              isEdit = false;
+              setIsEdit(false);
             }}
           >
             ✓
