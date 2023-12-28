@@ -10,8 +10,8 @@ export const Authorization = () => {
 
   return {
     headers: {
-      accessToken: `Bearer ${access}`,
-      refreshToken: `Bearer ${refresh}`,
+      Authorization: `Bearer ${access}`,
+      "Authorization-refresh": `Bearer ${refresh}`,
     },
   };
 };

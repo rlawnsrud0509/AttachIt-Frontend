@@ -3,10 +3,14 @@ import "./style.css";
 import { useRecoilState } from "recoil";
 import { postArrayAtom } from "../../store";
 import Attachment from "../attachment";
+import { useNavigate } from "react-router-dom";
+import { useUserLogoutMutation } from "../../services/auth/mutate";
 
-const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex }) => {
+const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex, mapRef }) => {
   const containerRef = useRef();
   const [postArray, setPostArray] = useRecoilState(postArrayAtom);
+  const navigate = useNavigate();
+  const { userLogoutMutate } = useUserLogoutMutation();
 
   useEffect(() => {
     containerRef.current.style.left = `${
@@ -35,8 +39,14 @@ const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex }) => {
               isEdit={true}
               postType={"text"}
               setClickState={setClickRef}
-              defaultX={100}
-              defaultY={100}
+              defaultX={
+                parentRef.current.offsetWidth / 2 -
+                parentRef.current.offsetWidth / 4
+              }
+              defaultY={
+                parentRef.current.offsetHeight / 2 -
+                parentRef.current.offsetHeight / 4
+              }
               setZIndex={setZIndex}
               zIndex={ZIndex}
             />,
@@ -59,8 +69,13 @@ const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex }) => {
               isEdit={true}
               postType={"file"}
               setClickState={setClickRef}
-              defaultX={100}
-              defaultY={100}
+              defaultX={
+                mapRef.current.offsetWidth / 2 - mapRef.current.offsetWidth / 4
+              }
+              defaultY={
+                mapRef.current.offsetHeight / 2 -
+                mapRef.current.offsetHeight / 4
+              }
               setZIndex={setZIndex}
             />,
           ]);
@@ -160,12 +175,28 @@ const Menubar = ({ parentRef, setClickRef, setZIndex, ZIndex }) => {
           ></div>
         </div>
       </div>
-      <a href="https://auth.bssm.kro.kr/oauth?clientId=ffe90891&redirectURI=http://localhost:3000/auth">
-        <div className="flex flex-col h-full justify-between p-4 box-boxShadow ml-8 cursor-pointer">
-          <img width={40} height={40} src="images/login.png" alt="login" />
-          <div className="font-normal">로그인</div>
-        </div>
-      </a>
+      <div className="w-[1px] h-full bg-[#DDDEE3] ml-8" />
+      <div
+        className="flex flex-col h-full justify-center items-center box-boxShadow ml-6 cursor-pointer"
+        onClick={() => {
+          if (!window.localStorage.getItem("access-token"))
+            window.location.href =
+              "https://auth.bssm.kro.kr/oauth?clientId=ffe90891&redirectURI=http://localhost:3000/auth";
+          else userLogoutMutate();
+        }}
+      >
+        {window.localStorage.getItem("access-token") ? (
+          <>
+            <img width={40} height={40} src="images/logout.png" alt="logout" />
+            <div className="font-normal">로그아웃</div>
+          </>
+        ) : (
+          <>
+            <img width={40} height={40} src="images/login.png" alt="login" />
+            <div className="font-normal">로그인</div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

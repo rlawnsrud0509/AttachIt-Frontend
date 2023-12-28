@@ -99,6 +99,7 @@ const PostLayout = () => {
     >
       <Menubar
         parentRef={baseMapRef}
+        mapRef={mapRef}
         setClickRef={setIsMouseDown}
         setZIndex={setZIndex}
         ZIndex={zIndex}
