@@ -1,0 +1,41 @@
+.cont {
+  width: 925px;
+  height: 100px;
+  border: 1px solid #dddee3;
+  border-radius: 24px;
+  background-color: white;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.08);
+
+  bottom: 2rem;
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 22px;
+
+  z-index: 99999999;
+}
+
+.Post {
+  margin: 14px 18px 0px 18px;
+  display: inline-block;
+  transition: ease-in-out 0.2s;
+  cursor: pointer;
+}
+
+.Post:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.logo {
+  width: 153px;
+  height: 56px;
+  margin: 22px 18px 0px 0px;
+}
+
+.palette {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0px 0px 10px;
+}
