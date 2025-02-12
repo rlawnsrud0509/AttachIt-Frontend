@@ -12,35 +12,6 @@ const PostLayout = () => {
 
   const postArray = useRecoilValue(postArrayAtom);
 
-  const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    const ws = new window.WebSocket('ws://attachit.kro.kr/api/attachments');
-    ws.onopen = () => {
-      console.log('WebSocket 연결 성공');
-    };
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('WebSocket에서 받은 데이터:', data);
-
-      // 여기에서 상태를 업데이트하거나 다른 작업 수행
-    };
-
-    return ()=> {
-      ws.onclose = () => {
-        console.log('WebSocket 연결 종료');
-      };
-    }
-
-
-    setSocket(ws);
-
-    // 컴포넌트가 언마운트되면 WebSocket 연결 해제
-    return () => {
-      ws.close();
-    };
-  }, []);
-
   //마우스 눌렀을때 시작위치저장 & 움직일 div움직일수잇게함
 
   const handleMouseDown = (event) => {
@@ -57,17 +28,11 @@ const PostLayout = () => {
     if (parseInt(mapRef.current.style.top.replace("px", "")) > 0) {
       mapRef.current.style.top = "0px";
     }
-    if (
-      parseInt(mapRef.current.style.left.replace("px", "")) <
-      -baseMapRef.current.offsetWidth
-    ) {
+    if (parseInt(mapRef.current.style.left.replace("px", "")) < -baseMapRef.current.offsetWidth) {
       mapRef.current.style.left = "auto";
       mapRef.current.style.right = "0px";
     }
-    if (
-      parseInt(mapRef.current.style.top.replace("px", "")) <
-      -baseMapRef.current.offsetHeight
-    ) {
+    if (parseInt(mapRef.current.style.top.replace("px", "")) < -baseMapRef.current.offsetHeight) {
       mapRef.current.style.top = "auto";
       mapRef.current.style.bottom = "0px";
     }
@@ -82,10 +47,8 @@ const PostLayout = () => {
       const offsetX = event.clientX - startPos.x;
       const offsetY = event.clientY - startPos.y;
 
-      if (mapRef.current.offsetLeft + offsetX >= 0)
-        mapRef.current.style.left = "0px";
-      if (mapRef.current.offsetTop + offsetY >= 0)
-        mapRef.current.style.top = "0px";
+      if (mapRef.current.offsetLeft + offsetX >= 0) mapRef.current.style.left = "0px";
+      if (mapRef.current.offsetTop + offsetY >= 0) mapRef.current.style.top = "0px";
       if (
         -mapRef.current.offsetLeft >=
         mapRef.current.offsetWidth - baseMapRef.current.offsetWidth
@@ -122,10 +85,7 @@ const PostLayout = () => {
   }, [isMouseDown, startPos]);
 
   return (
-    <div
-      ref={baseMapRef}
-      className="w-screen h-screen relative bg-orange-200 overflow-hidden"
-    >
+    <div ref={baseMapRef} className="w-screen h-screen relative bg-orange-200 overflow-hidden">
       <Menubar
         parentRef={baseMapRef}
         mapRef={mapRef}
