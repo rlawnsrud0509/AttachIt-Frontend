@@ -18,6 +18,7 @@ const Attachment = ({
   defaultY,
 }) => {
   const postRef = useRef();
+  const checkRef = useRef();
 
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -36,13 +37,15 @@ const Attachment = ({
   });
 
   const handleMouseDown = (event) => {
+    event.preventDefault();
     setClickState(false);
     setIsMouseDown(true);
     setStartPos({ x: event.clientX, y: event.clientY });
     postRef.current.style.transform = "scale(1.03)";
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (event) => {
+    event.preventDefault();
     setIsMouseDown(false);
     postRef.current.style.transform = "scale(1)";
     setZIndex(zIndex + 1);
@@ -66,6 +69,16 @@ const Attachment = ({
     }
   };
 
+  const handleCheckMouseDown = (event) => {
+    event.stopPropagation();
+  };
+
+  const handleCheckMouseUp = (event) => {
+    event.stopPropagation();
+    saveAttachmentMutate();
+    setIsEdit(false);
+  };
+
   useEffect(() => {
     postRef.current.style.top = `${defaultY}px`;
     postRef.current.style.left = `${defaultX}px`;
@@ -73,10 +86,15 @@ const Attachment = ({
 
   useEffect(() => {
     const post = postRef.current;
+    const check = checkRef.current;
 
     post.addEventListener("mousedown", handleMouseDown);
     post.addEventListener("mouseup", handleMouseUp);
     post.addEventListener("mousemove", handleMouseMove);
+    if (check) {
+      check.addEventListener("mouseup", handleCheckMouseUp);
+      check.addEventListener("mousedown", handleCheckMouseDown);
+    }
 
     return () => {
       post.removeEventListener("mousedown", handleMouseDown);
@@ -143,9 +161,7 @@ const Attachment = ({
           className="w-[228px] h-[71px] flex flex-col justify-between p-2 box-border relative m-2"
           style={{ backgroundColor: color[colorCode] }}
         >
-          <div className="font-normal">
-            {file.substring(file.lastIndexOf("\\") + 1)}
-          </div>
+          <div className="font-normal">{file.substring(file.lastIndexOf("\\") + 1)}</div>
           <div className="w-full flex justify-between text-[12px] text-[#202020] opacity-[0.4]">
             <div className="font-normal">클릭하여 다운로드</div>
           </div>
@@ -158,12 +174,9 @@ const Attachment = ({
         </div>
         {isEdit && (
           <div
+            ref={checkRef}
             className="w-[35px] h-[35px] mr-12 rounded-lg text-black text-[1.1rem] flex justify-center items-center hover:opacity-[0.6] hover:scale-[1.03]"
             style={{ backgroundColor: color[colorCode] }}
-            onClick={() => {
-              saveAttachmentMutate();
-              setIsEdit(false);
-            }}
           >
             ✓
           </div>
